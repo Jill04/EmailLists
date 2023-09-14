@@ -1,91 +1,90 @@
-
-package src;
-
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+public class EmailList {
+    private String listName;
+    private int temp = 0;
+    private Scanner scanner = new Scanner(System.in);
+    private List<EmailAddress> emailList;
 
-public class EmailList 
-{
-        private String Listname;
-        int temp=0;
-        Scanner sc =new Scanner(System.in);
-        private List<EmailAddress> emaillist;
+    /**
+     * Initializes an EmailList object with a name.
+     *
+     * @param listName The name of the email list.
+     */
+    public EmailList(String listName) {
+        this.listName = listName;
+        this.emailList = new LinkedList<>();
+    }
 
-        //*****************  initial constructor  ******************************************
-        EmailList(String Listname)
-        {
-            this.Listname=Listname; 
-            this.emaillist= new LinkedList<EmailAddress>();/* creating LinkedList of EmailAddress*/
+    /**
+     * Adds an email address to the email list.
+     *
+     * @param email The EmailAddress object to add to the list.
+     */
+    public void addEmailAddress(EmailAddress email) {
+        emailList.add(email);
+    }
 
-        }
-        //*****************  generateList  *********************************************
-        public void generatelist(EmailAddress email)
-        {
-                emaillist.add(email);
+    /**
+     * Checks if the list name is equal to the provided name.
+     *
+     * @param name The name to compare with the list name.
+     * @return True if the names are equal, false otherwise.
+     */
+    public boolean isEqual(String name) {
+        return listName.equals(name);
+    }
 
-        }
-        //*****************  isEqual  **************************************************
-        boolean isEqual(String Listname)
-        {
-            if(this.Listname.equals(Listname))
-            {
-                return true;
+    /**
+     * Displays the list of email addresses in the email list.
+     */
+    public void display() {
+        System.out.print(listName + " : [");
+        for (EmailAddress emailAddr : emailList) {
+            if (temp == 0) {
+                System.out.print(emailAddr.toString());
+                temp = 10;
+            } else {
+                System.out.print(", " + emailAddr.toString());
             }
-            else
-            {
-                return false;
-            }
         }
-          //*****************  display  **************************************************
-          public void display()
-             {
-                  System.out.print(Listname+" : [");
-                  for (EmailAddress emailaddr : emaillist)
-                   {
-                      if(temp == 0)
-                        {
-                          System.out.print(emailaddr.toString()); temp=10;
-                        }
-                       else
-                        {
-                          System.out.print(", " +emailaddr.toString());
-                        }
-                    }
-                  System.out.print("]"+"\n");
-                  temp=0;
+        System.out.print("]\n");
+        temp = 0;
+    }
 
-             }
-          //*****************  addNewEmail  **************************************************
-          public EmailAddress addNewEmail()
-          {    
+    /**
+     * Adds a new email address to the email list.
+     *
+     * @return The added EmailAddress object.
+     */
+    public EmailAddress addNewEmail() {
+        EmailAddress newEmail = new EmailAddress();
+        newEmail.addEmail(scanner, "y");
+        addEmailAddress(newEmail);
+        return newEmail;
+    }
 
-               EmailAddress em=new EmailAddress();
-               em.addEmail(sc,"y");
-               generatelist(em);
-               return em;
-          }
-          //*****************  deleteEmail  **************************************************
-          public void deleteEmail()
-          {
+    /**
+     * Deletes an email address from the email list.
+     */
+    public void deleteEmail() {
+        for (int i = 0; i < emailList.size(); i++) {
+            System.out.println(i + " " + emailList.get(i));
+        }
+        System.out.println("Enter the entry number to delete:");
+        int index = scanner.nextInt();
+        emailList.remove(index);
+    }
 
-              for(int i=0;i<emaillist.size();i++)
-              {
-                  System.out.println(i+" "+emaillist.get(i));
-              }
-              System.out.println("Enter the entry no to delete:");
-              int index=sc.nextInt();
-              emaillist.remove(index);
-
-          }
-
-         //*****************   toString    ***************************************************
-         @Override 
-         public String toString()
-         {
-          return (Listname);
-         }
+    /**
+     * Returns the list name as a string representation.
+     *
+     * @return The list name as a string.
+     */
+    @Override
+    public String toString() {
+        return listName;
+    }
 }
-
